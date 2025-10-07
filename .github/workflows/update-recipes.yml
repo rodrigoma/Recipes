@@ -1,0 +1,39 @@
+name: Update Recipes JSON
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  update-recipes:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+
+      - name: Set up Git user
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+
+      - name: Ensure update-recipes.sh is executable
+        run: chmod +x update-recipes.sh
+
+      - name: Run update-recipes.sh
+        run: bash update-recipes.sh
+
+      - name: Check for changes
+        run: |
+          if git diff --quiet recipes.json; then
+            echo "No changes to commit." && exit 0
+          fi
+          git add recipes.json
+          git commit -m "chore: update recipes.json [auto]"
+          git push origin master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

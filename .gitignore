@@ -1,3 +1,28 @@
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+out/
+
+# macOS
 .DS_Store
-_*/
-recipes/_*
+.AppleDouble
+.LSOverride
+Icon?
+._*
+.Spotlight-V100
+.Trashes
+
+# System files
+Thumbs.db
+Desktop.ini
+
+# Node/npm (if applicable)
+node_modules/
+
+# Logs
+*.log
+
+# VSCode (optional, in case you use it)
+.vscode/
+
