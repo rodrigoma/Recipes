@@ -5,6 +5,7 @@ on:
     branches: [ master ]
   pull_request:
     branches: [ master ]
+  workflow_dispatch:
 
 jobs:
   update-recipes:
@@ -13,7 +14,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          persist-credentials: false
+          persist-credentials: true
           fetch-depth: 0
 
       - name: Set up Git user
@@ -27,13 +28,14 @@ jobs:
       - name: Run update-recipes.sh
         run: bash update-recipes.sh
 
-      - name: Check for changes
+      - name: Check for changes and push if needed
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN_FOR_ACTIONS_RECIPES }}
         run: |
           if git diff --quiet recipes.json; then
             echo "No changes to commit." && exit 0
           fi
           git add recipes.json
           git commit -m "chore: update recipes.json [auto]"
+          git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git
           git push origin master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN_FOR_ACTIONS_RECIPES }}
