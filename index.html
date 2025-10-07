@@ -49,10 +49,19 @@
 		</div>
 	</body>
 
-	<!-- combo php/js to get all recipes in the folder -->
+	<!-- load recipes from json file -->
 	<script>
-		<?php $files = array_map('basename', glob('recipes/*.md')); ?>
-  	let files = <?php echo json_encode($files) ?>;
+		let files = [];
+		fetch('recipes.json')
+			.then(response => response.json())
+			.then(data => {
+				files = data;
+				// trigger the recipe list generation
+				if (typeof loadRecipeList === 'function') {
+					loadRecipeList();
+				}
+			})
+			.catch(error => console.error('Error loading recipes:', error));
 	</script>
 	
 	<!-- javascript does the rest :) -->

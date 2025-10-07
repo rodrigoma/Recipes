@@ -103,13 +103,15 @@ You can also include other images in the recipe using Markdown's image syntax: `
 
 
 ## OTHER OPTIONS  
-The `recipe.php` file also includes some more options you can customize:
+The `recipe.html` file also includes some more options you can customize:
 
 * `yelpLocation`: the city/state where you're located to make Yelp searches easier! No need for fancy formatting, this will work fine: `Minneapolis MN`  
 * `helpUrls`: dictionary with the `label` (text displayed) and `url` in template form. The string `<name>` will be replaced with your recipe's name  
 * `lookForHeroImage`: on by default, but you can turn it off if you never intend to include hero images  
 * `autoUrlSections`: list of sections in the recepe template where you want raw URLs (ex: www.instagram.com) to be turned into real links. Great for the `Based On` section but not so good if you want to include Markdown-formatted links in other sections  
 * `shortenUrls`: turns a super-long url into just the main domain name (link will still work as normal, just less cluttered). Off by default but exists if you want it
+
+**Note:** When you add or remove recipe files, run `./update-recipes.sh` to regenerate the `recipes.json` file that contains the list of all recipes.
 
 
 ## SUGGESTIONS WELCOME  

@@ -2,7 +2,7 @@
 // once document is loaded, load list of markdown files
 // and generate table of contents, plus a quick-nav list
 // at the top
-$(document).ready(function() {
+function loadRecipeList() {
   let listOfRecipes = '';
   let listOfLetters = '';
   let prevLetter = '';
@@ -32,7 +32,7 @@ $(document).ready(function() {
       listOfRecipes += '<li>';
     }
 
-    listOfRecipes += '<a href="recipe.php#' + anchor + '">' + name + '</a></li>';
+    listOfRecipes += '<a href="recipe.html#' + anchor + '">' + name + '</a></li>';
     prevLetter = firstLetter;
   }
 
@@ -41,5 +41,13 @@ $(document).ready(function() {
 
   // ...and the list of first-letters for quick nav
   $('#navigation').html(listOfLetters);
+}
+
+$(document).ready(function() {
+  // If files are already loaded (synchronous), generate the list
+  if (files && files.length > 0) {
+    loadRecipeList();
+  }
+  // Otherwise, the fetch callback in index.html will call loadRecipeList()
 });
 
